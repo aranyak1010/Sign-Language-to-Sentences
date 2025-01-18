@@ -1,6 +1,6 @@
 Thanks for downloading this template!
 
-Template Name: Moderna
-Template URL: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+Template Name: GestureGist
+Template URL: https:// Team GG.com/free-bootstrap-template-corporate-GestureGist/
+Author:  Team GG.com
+License: https:// Team GG.com/license/
