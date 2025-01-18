@@ -32,9 +32,9 @@ def animation():
 def index3(): 
     return render_template('index3.html')
 
-@app.route('/blog')
+@app.route('/signup')
 def blog(): 
-    return render_template('blog.html')
+    return render_template('Signup.html')
 
 
 @app.route('/blog-details')
@@ -46,11 +46,11 @@ def blogd():
 def team(): 
     return render_template('team.html')
 
-@app.route('/portfolio')
+@app.route('/login')
 def portfolio(): 
-    return render_template('portfolio.html')
+    return render_template('Login.html')
 
-@app.route('/portfolio-details')
+@app.route('/login-details')
 def portfoliod(): 
     return render_template('portfolio-details.html')
 

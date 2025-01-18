@@ -1,9 +1,9 @@
 /**
-* Template Name: Moderna
-* Template URL: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/
+* Template Name: GestureGist
+* Template URL: https:// Team GG.com/free-bootstrap-template-corporate-GestureGist/
 * Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+* Author:  Team GG.com
+* License: https:// Team GG.com/license/
 */
 
 (function() {
