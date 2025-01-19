@@ -171,6 +171,15 @@ def suicide():
         
 #     return render_template('contact.html',query=query)
 
+@app.route("/upload")
+def upload():
+    return render_template('uploadfiles.html')
+
+
+
+@app.route("/result")
+def result():
+    return render_template('results.html')
 
 if __name__== "__main__":
     app.run(debug=True)
