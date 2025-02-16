@@ -53,38 +53,58 @@
 
   <main class="main">
     <div class="page-title dark-background">
-      <div class="container position-relative">
-        <h1>Upload Your Video</h1>
-        <p>Upload your video to analyze gestures and receive real-time detection results.</p>
-      </div>
+        <div class="container position-relative">
+            <h1>Upload Your Video</h1>
+            <p>Upload your video to analyze gestures and receive real-time detection results.</p>
+        </div>
     </div>
-    
+
     <section class="container mt-5 text-center">
-      {% if filename %}
+        {% if filename %}
+        <!-- Show Uploaded Video -->
         <video id="uploadedVideo" width="640" height="480" controls>
-          <source src="{{ url_for('uploaded_stream', filename=filename) }}" type="video/mp4">
-          Your browser does not support the video tag.
+            <source src="{{ url_for('uploaded_stream', filename=filename) }}" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
         <div id="detectionText" class="mt-3 fs-4 fw-bold"></div>
+
         <script>
-          function fetchDetectionText() {
-            fetch("{{ url_for('detection_text') }}")
-              .then(response => response.json())
-              .then(data => {
-                document.getElementById("detectionText").innerText = data.text;
-              });
-          }
-          setInterval(fetchDetectionText, 1000);
+            function fetchDetectionText() {
+                fetch("{{ url_for('detection_text') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("detectionText").innerText = data.text;
+                    });
+            }
+            setInterval(fetchDetectionText, 1000);
         </script>
-      {% else %}
+
+        {% else %}
+        <!-- Upload Form -->
         <form method="POST" action="{{ url_for('upload_video') }}" enctype="multipart/form-data" class="mt-4">
-          <input type="file" name="video" accept="video/*" class="form-control w-50 mx-auto" required>
-          <br>
-          <button type="submit" class="btn btn-primary">Upload</button>
+            <input type="file" id="videoInput" name="video" accept="video/*" class="form-control w-50 mx-auto" required>
+            <br>
+            <video id="videoPreview" width="640" height="480" controls style="display: none;"></video>
+            <br>
+            <button type="submit" class="btn btn-primary">Upload</button>
         </form>
-      {% endif %}
+
+        <script>
+            document.getElementById('videoInput').addEventListener('change', function(event) {
+                let file = event.target.files[0];
+                if (file) {
+                    let videoURL = URL.createObjectURL(file);
+                    let videoPreview = document.getElementById('videoPreview');
+                    videoPreview.src = videoURL;
+                    videoPreview.style.display = "block";
+                }
+            });
+        </script>
+
+        {% endif %}
     </section>
-  </main>
+</main>
+
 
   <footer id="footer" class="footer dark-background">
 
