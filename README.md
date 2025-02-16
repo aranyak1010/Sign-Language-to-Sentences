@@ -96,11 +96,11 @@ Sign-Language-to-Sentences/
 
 
 ## **Contributors**
-**Kshitiz Kumar**
-**Sanyam Sankhla**
-**Anshul Dewangan**
-**Akshat Arora**
-**Aranyak Banerjee**
+- **Kshitiz Kumar**
+- **Sanyam Sankhla**
+- **Anshul Dewangan**
+- **Akshat Arora**
+- **Aranyak Banerjee**
 
 ---
 
