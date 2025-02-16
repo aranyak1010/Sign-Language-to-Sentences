@@ -102,6 +102,7 @@ Sign-Language-to-Sentences/
 - **Akshat Arora**
 - **Aranyak Banerjee**
 
+
 ---
 
 ## **License**
