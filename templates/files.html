@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Action Recognition</title>
+    <style>
+      body { font-family: Arial, sans-serif; text-align: center; }
+      .option { margin: 20px; }
+      a.button {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 16px;
+          text-decoration: none;
+          background-color: #3498db;
+          color: white;
+          border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Action Recognition</h1>
+    
+    <div class="option">
+      <h2>Live Video Feed</h2>
+      <a class="button" href="{{ url_for('live_video_feed') }}" target="_blank">Start Live Feed</a>
+    </div>
+    
+    <div class="option">
+      <h2>Upload Your Video</h2>
+      <a class="button" href="{{ url_for('upload_video') }}" target="_blank">Upload Video</a>
+    </div>
+  </body>
+</html>
