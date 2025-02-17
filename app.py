@@ -6,6 +6,8 @@ import mediapipe as mp
 from flask import Flask, render_template, Response, request, redirect, url_for, send_from_directory, jsonify
 from matplotlib import pyplot as plt
 import tensorflow as tf
+import uuid
+
 # TensorFlow and Keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
@@ -18,6 +20,8 @@ app.config['UPLOAD_FOLDER'] = 'uploads'  # folder to save uploaded videos
 # Ensure the upload folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
+
+sequence, sentence, predictions = [], [], []
 
 # Set up TensorBoard callback directory (optional)
 log_dir = os.path.join('Logs')
@@ -92,7 +96,7 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(actions.shape[0], activation='softmax'))
 
 model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
-model.load_weights(r'C:\Users\baner\Sign-Language-to-Sentences\model\action.h5')
+model.load_weights(r'F:/AI Project/Sign-Language-to-Sentences/model/action.h5')
 
 colors = [(245, 117, 16), (117, 245, 16), (16, 117, 245)]
 
@@ -220,18 +224,20 @@ def live_stream():
 
 @app.route('/uploaded_video_feed/<filename>')
 def uploaded_video_feed(filename):
-    """Route to stream the uploaded video."""
+    """Route to render the uploaded video page."""
     global sequence, sentence, predictions
+    if not filename:
+        return redirect(url_for('upload_video'))  # Redirect if filename is empty
     sequence, sentence, predictions = [], [], []
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     return render_template('uploaded.html', filename=filename)
 
 @app.route('/uploaded_stream/<filename>')
 def uploaded_stream(filename):
     """Stream the uploaded video frames."""
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    return Response(generate_frames(source=filepath),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    if not os.path.exists(filepath):
+        return "File not found", 404
+    return Response(generate_frames(source=filepath), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_video():
@@ -243,9 +249,10 @@ def upload_video():
         if file.filename == '':
             return redirect(request.url)
         if file:
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            filename = str(uuid.uuid4()) + "_" + file.filename  # Generate unique filename
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            return redirect(url_for('upload_video', filename=file.filename))
+            return redirect(url_for('uploaded_video_feed', filename=filename))  # Redirect to video playback page
     filename = request.args.get('filename')
     return render_template('upload.html', filename=filename)
 
@@ -258,6 +265,7 @@ def detection_text():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    """Serve uploaded files."""
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 # ------------------- Main ------------------- #
